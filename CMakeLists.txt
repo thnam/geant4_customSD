@@ -42,7 +42,6 @@ target_link_libraries(customSD ${Geant4_LIBRARIES})
 # relies on these scripts being in the current working directory.
 #
 set(customSD_SCRIPTS
-  customSD.out
   customSD.in
   gui.mac
   init_vis.mac
