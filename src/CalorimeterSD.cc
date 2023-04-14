@@ -94,31 +94,13 @@ G4bool CalorimeterSD::ProcessHits(G4Step* step,
           << G4endl;
       }
     }
-
-    // auto secondary = step->GetSecondaryInCurrentStep();
-    // size_t size_secondary = (*secondary).size();
-
-    // if (size_secondary){
-      // for (size_t i=0; i<(size_secondary);i++){
-        // auto secstep = (*secondary)[i];
-
-        // G4String secondaryName = secstep->GetDefinition()->GetParticleName();
-        // auto secondaryID = secstep->GetTrackID();
-        // G4cout << "secondary " << i << ": " << secondaryName
-          // << ", energy: " << secstep->GetKineticEnergy() / CLHEP::MeV << " MeV"
-          // << ", time: " << secstep->GetGlobalTime() / CLHEP::ns << " ns"
-          // << G4endl;
-      // }
-    // }
   }
 
   // find decay e+
   if (step->GetTrack()->GetDefinition() == G4Positron::Positron()){
     // check if its mother is the primary particle (id 1) and if this is the
     // first step of this particle
-
     if (step->GetTrack()->GetParentID() == 1 && step->IsFirstStepInVolume()){
-      // && step->GetTrack()->GetCurrentStepNumber() == 0) {
       G4StepPoint* postPoint = step->GetPostStepPoint();
       G4StepPoint* prePoint=step->GetPreStepPoint();
       const G4VProcess *post_step=postPoint->GetProcessDefinedStep();
@@ -129,15 +111,14 @@ G4bool CalorimeterSD::ProcessHits(G4Step* step,
         if ( verboseLevel>=0 ) {
           // G4cout << "pre: " << processName_pre << ", post: " << processName_post << G4endl;
           // print out some useful info about this track
-          G4StepPoint *postStep = step->GetPreStepPoint();
-          G4cout << "e+ born at " << postStep->GetGlobalTime() / CLHEP::ns << " ns"
-            << ", position " << postStep->GetPosition() / CLHEP::cm << " cm"
-            << ", kinetic energy: " << postStep->GetKineticEnergy() / CLHEP::MeV << " MeV"
+          G4StepPoint *preStep = step->GetPreStepPoint();
+          G4cout << "e+ born at " << preStep->GetGlobalTime() / CLHEP::ns << " ns"
+            << ", position " << preStep->GetPosition() / CLHEP::cm << " cm"
+            << ", kinetic energy: " << preStep->GetKineticEnergy() / CLHEP::MeV << " MeV"
+            << ", momentum direction: " << preStep->GetMomentumDirection()
             << G4endl;
         }
-        
       }
-
     }
   }
 
